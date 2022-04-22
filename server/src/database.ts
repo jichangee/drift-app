@@ -4,7 +4,7 @@ import { SequelizeStorage, Umzug } from "umzug";
 export const sequelize = new Sequelize({
   dialect: "sqlite",
   database: "drift",
-  storage: __dirname + "./drift.sqlite",
+  storage: __dirname + "/drift.sqlite",
   models: [__dirname + "/lib/models"],
   logging: console.log,
 });

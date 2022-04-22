@@ -13,6 +13,9 @@ export const up: Migration = async ({ context: queryInterface }) =>
 		title: {
 			type: DataTypes.STRING
 		},
+		content: {
+			type: DataTypes.STRING
+		},
 		visibility: {
 			type: DataTypes.STRING
 		},
