@@ -18,7 +18,7 @@ const errorHandler = ({ response }) => {
 }
 
 request.interceptors.request.use(config => {
-  if (Cookies.get(DRIFT_TOKEN)) {
+  if (Cookies.get(DRIFT_TOKEN) && !config.headers['authorization']) {
     config.headers['authorization'] = 'Bearer ' + Cookies.get(DRIFT_TOKEN)
   }
   return config

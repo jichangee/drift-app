@@ -20,16 +20,19 @@ export default function Index() {
       title: "首页",
       icon: <HomeOutlined className={styles.icon} />,
       href: "/",
+      value: 'home'
     },
     {
       title: "登录",
       icon: <UserOutlined className={styles.icon} />,
       href: "/signin",
+      value: 'signin'
     },
     {
       title: "注册",
       icon: <UserAddOutlined className={styles.icon} />,
       href: "/signup",
+      value: 'signup'
     },
   ];
 
@@ -38,40 +41,46 @@ export default function Index() {
       title: "新建",
       icon: <PlusCircleOutlined className={styles.icon} />,
       href: "/new",
+      value: 'new'
     },
     {
       title: "我的",
       icon: <UnorderedListOutlined className={styles.icon} />,
       href: "/mine",
+      value: 'mine'
     },
     {
       title: "设置",
       icon: <SettingOutlined className={styles.icon} />,
       href: "/setting",
+      value: 'setting'
     },
     {
       title: "登出",
       icon: <UserDeleteOutlined className={styles.icon} />,
       href: "/signout",
+      value: 'signout'
     },
   ];
   const { signedIn } = useSignedIn();
   const router = useRouter();
+
   const menuList = useMemo(() => {
+    if (signedIn === undefined) {
+      return []
+    }
     return signedIn ? authMenuList : defaultMenuList;
-  }, [signedIn]);
+  }, [signedIn, authMenuList, defaultMenuList]);
+
   const menus = useMemo(() => {
-    console.log("router.pathname", router.pathname);
     return menuList.map((item) => {
-      const activityClassName =
-        router.pathname === item.href ? styles.selected : "";
+      const activeStyle = router.pathname === item.href ? styles.selected : ""
       return (
-        <Link href={item.href} key={item.title}>
+        <Link href={item.href} key={item.value}>
           <Button
-            key={item.title}
             icon={item.icon}
             type="text"
-            className={[activityClassName, styles.item]}
+            className={`${activeStyle} ${styles.item}`}
           >
             {item.title}
           </Button>
@@ -79,5 +88,7 @@ export default function Index() {
       );
     });
   }, [menuList, router.pathname]);
-  return <div className={styles.header}>{menus}</div>;
+  return (
+    <div className={styles.header}>{menus}</div>
+  );
 }

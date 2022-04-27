@@ -6,7 +6,7 @@ export const DRIFT_TOKEN = 'drift-token'
 
 const useSignedIn = () => {
   const [signedIn, setSignedIn] = useSharedState('signedIn', 
-    typeof window === 'undefined' ? false : !!Cookies.get(DRIFT_TOKEN)
+    typeof window === 'undefined' ? undefined : !!Cookies.get(DRIFT_TOKEN)
   )
 
   const signin = token => {

@@ -7,8 +7,11 @@ import {
 	IsUUID,
 	PrimaryKey,
 	DataType,
-	Unique
+	Unique,
+  BelongsToMany
 } from "sequelize-typescript"
+import { Post } from "./Post"
+import { PostAuthor } from "./PostAuthor"
 
 @Table({
   tableName: 'users'
@@ -28,6 +31,9 @@ export class User extends Model {
 
   @Column
   password!: string
+
+  @BelongsToMany(() => Post, () => PostAuthor)
+  posts?: Post[]
   
   @CreatedAt
   @Column

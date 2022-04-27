@@ -1,0 +1,15 @@
+.titleCon {
+  margin-bottom: 30px;
+}
+.title {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+.desc {
+  font-size: 14px;
+}
+.content {
+  border: 1px solid #d9d9d9;
+  padding: 20px;
+  box-sizing: border-box;
+}

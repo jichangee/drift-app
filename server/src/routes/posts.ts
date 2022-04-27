@@ -46,12 +46,38 @@ posts.post(
   }
 );
 
-posts.get('/', jwt, async (req, res) => {
+posts.get('/', jwt, async (req: UserJwtRequest, res) => {
   try {
-    const posts = await Post.findAll({
-      attributes: ["id", "title", "content", "description", "updatedAt"],
+    const user = await User.findByPk(req.user.id, {
+      include: [
+        {
+          model: Post,
+          as: 'posts',
+          include: [
+            {
+              model: Post,
+              as: "parent",
+              attributes: ['id', 'title', 'visibility']
+            }
+          ],
+          attributes: [
+            "id",
+            "title",
+            "description",
+            "visibility",
+            "createdAt"
+          ]
+        }
+      ]
+    })
+    if (!user) {
+      return res.status(404).json({error: '未找到用户' })
+    }
+
+    const userPost = user.posts
+    res.status(200).json({
+      posts: userPost
     });
-    res.status(200).json(posts);
   } catch (error) {
     res.status(400).json(error);
   }
