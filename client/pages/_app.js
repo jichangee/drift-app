@@ -1,7 +1,8 @@
-import '../styles/globals.css'
+import "antd/dist/antd.css";
+import "@/styles/vars.css";
+import "@/styles/global.css";
+import App from "@/components/App";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+export default function MyApp({ Component, pageProps }) {
+  return <App Component={Component} pageProps={pageProps} />;
 }
-
-export default MyApp

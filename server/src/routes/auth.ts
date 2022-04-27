@@ -27,7 +27,7 @@ auth.post("/signup", async (req, res, next) => {
 
     const created_user = await User.create(user);
     const token = await generateAccessToken(created_user)
-    res.status(201).json({ userId: created_user.id, token });
+    res.status(200).json({ userId: created_user.id, token });
   } catch (error) {
     res.status(401).json({ error: error.message });
   }

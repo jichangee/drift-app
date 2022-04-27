@@ -56,6 +56,28 @@ posts.get('/', jwt, async (req, res) => {
     res.status(400).json(error);
   }
 })
+posts.get('/:id', jwt, async (req: UserJwtRequest, res) => {
+  try {
+    const post = await Post.findByPk(req.params.id, {
+      attributes: ["id", "title", "content", "description", "updatedAt", "visibility"],
+      include: {
+        model: User,
+        as: 'users',
+        attributes: ['id']
+      }
+    });
+    if (!post) {
+      return res.status(404).json({ message: '未找到文章' })
+    }
+    if (req.user.id !== post.users![0].id) {
+      return res.status(403).json({ message: '暂无权限查看' })
+    }
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+})
+
 posts.delete('/:id', jwt, async (req: UserJwtRequest, res, next) => {
   try {
     const post = await Post.findByPk(req.params.id, {

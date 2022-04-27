@@ -1,0 +1,22 @@
+.main {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 20px;
+  box-shadow: 0 0 8px rgb(0 0 0 / 10%);
+  background-color: #fff;
+}
+.content {
+  margin-top: 20px;
+}
+.input {
+  width: 200px;
+}
+.button {
+  width: 110px;
+}
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
