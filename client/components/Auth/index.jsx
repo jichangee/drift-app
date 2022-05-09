@@ -1,7 +1,6 @@
 import React from 'react'
 import { Form, Input, Button, message } from 'antd'
 import request from '@/utils/request'
-import Cookies from 'js-cookie'
 import styles from './index.module.css'
 import { useRouter } from 'next/router'
 import useSignedIn from '@/lib/hooks/use-signed-in'

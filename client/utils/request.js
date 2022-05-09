@@ -8,10 +8,11 @@ const request = axios.create({
 })
 
 const errorHandler = ({ response }) => {
-  const data = response.data
-  if (data.error) {
+  const data = response && response.data
+  console.log('errorHandler response', response)
+  if (data && data.error) {
     message.error(data.error)
-  } else if (data.message) {
+  } else if (data && data.message) {
     message.info(data.message)
   }
   return Promise.reject()
@@ -25,7 +26,6 @@ request.interceptors.request.use(config => {
 })
 
 request.interceptors.response.use(response => {
-  console.log('response', response)
   if (response.status >= 200 && response.status < 300) {
     return response.data
   }

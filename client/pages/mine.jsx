@@ -4,11 +4,14 @@ import request from "@/utils/request";
 import Link from "next/link";
 import { DeleteOutlined } from "@ant-design/icons";
 import styles from "./mine.module.css";
+import { VISIBILITY_LIST } from '@/lib/utils/enum'
+import { getItemFromEnumListByValue } from '@/lib/utils'
 export default function Index() {
   const [list, setList] = useState([]);
 
   const fetchList = () => {
     request.get("/posts").then((res) => {
+      console.log('res', res)
       setList(res.posts);
     });
   };
@@ -34,7 +37,7 @@ export default function Index() {
             </p>
             <div className={styles.tags}>
               <span className={[styles.tag, styles.private].join(" ")}>
-                私有
+                {getItemFromEnumListByValue(item.visibility, VISIBILITY_LIST).label}
               </span>
               <span className={styles.tag}>7分钟前</span>
             </div>

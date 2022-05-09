@@ -196,6 +196,7 @@ h1 {
   color: var(--textColorSecondary) !important;
 }
 .max-main {
-  max-width: 880px;
+  width: 680px;
+  max-width: 90%;
   margin: 0 auto;
 }

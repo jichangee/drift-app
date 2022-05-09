@@ -6,7 +6,7 @@ export default function Index({ Component, pageProps }) {
   return (
     <div>
       <Header />
-      <div className={[styles.content, ' max-main']}>
+      <div className={`${styles.content}`}>
         <Component {...pageProps} />
       </div>
     </div>

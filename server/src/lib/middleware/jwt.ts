@@ -24,19 +24,34 @@ export default async function authenticateToken(req: UserJwtRequest, res: Respon
   if (authToken.deletedAt) {
     return res.sendStatus(401).json({ message: 'token已过期' })
   }
-
-  jwt.verify(token, config.jwt_secret, async (err: any, user: User) => {
-    if (err) return res.sendStatus(403)
-    const userObj = await UserModel.findByPk(user.id, {
-      attributes: {
-        exclude: ['password']
-      }
-    })
-
-    if(!userObj) return res.sendStatus(403)
-
+  try {
+    const user: User = await getUserByJWT(token)
     req.user = user
 
     next()
+  } catch (error) {
+    return res.sendStatus(403)
+  }
+}
+
+export const getUserByJWT: any = (token) => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, config.jwt_secret, async (err: any, user: User) => {
+      if (err) {
+        reject(err)
+        return
+      }
+      const userObj = await UserModel.findByPk(user.id, {
+        attributes: {
+          exclude: ['password']
+        }
+      })
+  
+      if(!userObj) {
+        reject()
+        return
+      }
+      resolve(userObj)
+    })
   })
 }
